@@ -1,0 +1,16 @@
+[
+{
+  "modid": "rb",
+  "name": "Redstone Box",
+  "description": "Portable redstone machine.",
+  "version": "${version}",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
