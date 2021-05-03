@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "is_on=false": {"model": "rb:block_signal_off"},
+        "is_on=true": {"model": "rb:block_signal_on"}
+    }
+}

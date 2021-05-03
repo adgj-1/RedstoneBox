@@ -6,7 +6,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class DimensionProperties implements IDimensionProperties {
+public class DimensionProperties {
+	public static final int KEY_ACTIVE_DURATION = 8;
 	
 	private float[] fogColor;
 	private float[] skyColor;
@@ -18,6 +19,10 @@ public class DimensionProperties implements IDimensionProperties {
 	private BlockPos exitPos;
 	private int exitDim;
 	private int size;
+	
+	// temporary variables does not save to disk
+	private int activeKey;
+	private int countBeforeKeyReset;
 	
 	public DimensionProperties(int id) {
 		this.id = id;
@@ -36,49 +41,36 @@ public class DimensionProperties implements IDimensionProperties {
 		size = 16;
 	}
 	
-	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public float[] getSunColor() {
 		// TODO Auto-generated method stub
 		return sunriseSunsetColors;
 	}
 
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public IDimensionProperties getParentProperties() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public float[] getSkyColor() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void setGravitationalMultiplier(float mult) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public float getGravitationalMultiplier() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		NBTTagList list;
 
@@ -124,7 +116,6 @@ public class DimensionProperties implements IDimensionProperties {
 		nbt.setInteger("exitZ", exitPos.getZ());
 	}
 
-	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		NBTTagList list;
 
@@ -190,19 +181,16 @@ public class DimensionProperties implements IDimensionProperties {
 		}
 	}
 
-	@Override
 	public int getAtmosphereDensity() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public int getAverageTemp() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public void setAtmosphereDensity(int i) {
 		// TODO Auto-generated method stub
 		
@@ -273,4 +261,19 @@ public class DimensionProperties implements IDimensionProperties {
 		}
 	}
 
+	public void setActiveKey(int key) {
+		activeKey = key;
+	}
+	
+	public int getActiveKey() {
+		return activeKey;
+	}
+
+	public int getCountBeforeKeyReset() {
+		return countBeforeKeyReset;
+	}
+
+	public void setCountBeforeKeyReset(int countBeforeKeyReset) {
+		this.countBeforeKeyReset = countBeforeKeyReset;
+	}
 }

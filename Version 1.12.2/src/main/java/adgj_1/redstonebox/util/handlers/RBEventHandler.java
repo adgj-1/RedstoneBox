@@ -1,13 +1,14 @@
 package adgj_1.redstonebox.util.handlers;
 
+import org.lwjgl.input.Keyboard;
+
+import adgj_1.redstonebox.Main;
 import adgj_1.redstonebox.init.DimensionProperties;
 import adgj_1.redstonebox.init.DynamicDimensionHelper;
 import adgj_1.redstonebox.networking.PacketDimensionProperties;
 import adgj_1.redstonebox.networking.PacketTeleporter;
 import adgj_1.redstonebox.networking.RBPacketHandler;
 import adgj_1.redstonebox.world.WorldProviderEmpty;
-
-import adgj_1.redstonebox.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class RBEventHandler {
 
@@ -36,16 +38,20 @@ public class RBEventHandler {
 		// Test code to see if key is working
 		/*	Main.logger.info(Keyboard.getEventCharacter());
 			Main.logger.info("Player holding " + Minecraft.getMinecraft().player.getHeldItemMainhand().getDisplayName()); */
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		ItemStack heldItem = player.getHeldItemMainhand();
 		
-		if (Main.keyBindings[0].isPressed()) {
-			EntityPlayerSP player = Minecraft.getMinecraft().player;
-			ItemStack heldItem = player.getHeldItemMainhand();
-			if (heldItem.hasTagCompound() && heldItem.getTagCompound().hasKey("boxid")) {
+		if (heldItem.hasTagCompound() && heldItem.getTagCompound().hasKey("boxid")) {
+			int boxid = heldItem.getTagCompound().getInteger("boxid");
+			DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(boxid);
+			
+			if (properties != null && Keyboard.isKeyDown(Keyboard.getEventKey())) {
+				properties.setActiveKey(Keyboard.getEventKey());
+			}
+			
+			if (Main.keyBindings[0].isPressed()) {
 				if (!(player.world.provider instanceof WorldProviderEmpty)) {
-					int boxid = heldItem.getTagCompound().getInteger("boxid");
 					Main.logger.info("Teleporting to world #" + boxid);
-					DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(boxid);
-					
 					if (properties != null) {
 						NBTTagCompound nbt = new NBTTagCompound();
 						properties.writeToNBT(nbt);
@@ -63,8 +69,6 @@ public class RBEventHandler {
 					RBPacketHandler.INSTANCE.sendToServer(new PacketTeleporter(7,1,7,boxid,player.getEntityId()));
 				} else {
 					Main.logger.info("Teleporting from " + player.world.provider.getDimension() + " back to exit dimension");
-					DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(player.world.provider.getDimension());
-
 					if (properties == null) {
 						RBPacketHandler.INSTANCE.sendToServer(new PacketTeleporter(0,0,0,0,player.getEntityId()));
 						Main.logger.info("Something is wrong, dimension property is null");
@@ -72,6 +76,20 @@ public class RBEventHandler {
 						BlockPos exitPos = properties.getExitPos();
 						RBPacketHandler.INSTANCE.sendToServer(new PacketTeleporter(exitPos.getX(),exitPos.getY(),exitPos.getZ(),properties.getExitDim(),player.getEntityId()));
 					}
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onWorldTick(WorldTickEvent e) {
+		if (!e.world.isRemote && e.world.provider instanceof WorldProviderEmpty) {
+			DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(e.world.provider.getDimension());
+			if (properties.getActiveKey() != -1) {
+				properties.setCountBeforeKeyReset(properties.getCountBeforeKeyReset() - 1);
+				if (properties.getCountBeforeKeyReset() <= 0) {
+					properties.setActiveKey(-1);
+					properties.setCountBeforeKeyReset(DimensionProperties.KEY_ACTIVE_DURATION);
 				}
 			}
 		}

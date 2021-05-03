@@ -14,5 +14,7 @@ public class RBPacketHandler {
 				Side.SERVER);
 		INSTANCE.registerMessage(PacketDimensionProperties.DimensionPropertiesHandler.class, PacketDimensionProperties.class, 2,
 				Side.SERVER);
+		INSTANCE.registerMessage(PacketSignalBlock.PacketSignalBlockHandler.class, PacketSignalBlock.class, 3,
+				Side.SERVER);
 	}
 }

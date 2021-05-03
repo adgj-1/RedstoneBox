@@ -25,7 +25,7 @@ public class DynamicDimensionHelper {
 	public static final String workingPath = "rboxdim";
 	public static final int BASE_BOXID = 15;
 	private static DynamicDimensionHelper instance = new DynamicDimensionHelper();
-	private Map<Integer, IDimensionProperties> dimensionList;
+	private Map<Integer, DimensionProperties> dimensionList;
 	
 	public static int nextBoxId;
 	public static DimensionProperties defaultDimensionProperties;
@@ -51,7 +51,7 @@ public class DynamicDimensionHelper {
 		//Save Dimension Data
 		NBTTagCompound dimNbt = new NBTTagCompound();
 
-		for(Entry<Integer, IDimensionProperties> dimSet : dimensionList.entrySet()) {
+		for(Entry<Integer, DimensionProperties> dimSet : dimensionList.entrySet()) {
 
 			dimNbt = new NBTTagCompound();
 			try {
@@ -109,9 +109,9 @@ public class DynamicDimensionHelper {
 	 * Loads all dimension information from disk into the current instance of DimensionManager
 	 * @param filePath file path from which to load the information
 	 */
-	public Map<Integer,IDimensionProperties> loadDimensions(String filePath) {
+	public Map<Integer,DimensionProperties> loadDimensions(String filePath) {
 		//hasBeenInitiallized = true;
-		Map<Integer,IDimensionProperties> loadedDimProps = new HashMap<Integer,IDimensionProperties>();
+		Map<Integer,DimensionProperties> loadedDimProps = new HashMap<Integer,DimensionProperties>();
 
 		FileInputStream inStream;
 		NBTTagCompound nbt;

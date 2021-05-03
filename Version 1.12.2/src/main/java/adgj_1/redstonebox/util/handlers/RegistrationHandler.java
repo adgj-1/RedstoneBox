@@ -23,7 +23,8 @@ public class RegistrationHandler {
 		};
 		
 		final Item[] blocks = {
-				((BlockBase)Main.workbench_box).getItemBlock()
+				((BlockBase)Main.workbench_box).getItemBlock(),
+				((BlockBase)Main.block_signal).getItemBlock()
 		};
 		event.getRegistry().registerAll(items);
 		event.getRegistry().registerAll(blocks);
@@ -35,7 +36,8 @@ public class RegistrationHandler {
 	@SubscribeEvent
 	public static void registerBlocks(Register<Block> event) {
 		final Block[] blocks = {
-				Main.workbench_box
+				Main.workbench_box,
+				Main.block_signal
 		};
 		event.getRegistry().registerAll(blocks);
 	}

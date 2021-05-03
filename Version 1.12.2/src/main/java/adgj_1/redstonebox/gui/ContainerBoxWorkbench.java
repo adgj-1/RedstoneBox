@@ -20,8 +20,8 @@ public class ContainerBoxWorkbench extends Container
     	this.tileentity = tileentity;
     	tileentity.setUser(player.player);
     	tileentity.setContainer(this);
-    	this.addSlotToContainer(new SlotBox(tileentity, 0, 57, 18));
-    	this.addSlotToContainer(new SlotBox(tileentity, 1, 90, 43));
+    	this.addSlotToContainer(new SlotBox(tileentity, 0, 56, 17));
+    	this.addSlotToContainer(new SlotBox(tileentity, 1, 84, 35));
     	
     	for (int y = 0; y < 3; y++) {
     		for (int x = 0; x < 9; x++) {

@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 
 import adgj_1.redstonebox.init.DynamicDimensionHelper;
 import adgj_1.redstonebox.items.blocks.BoxWorkbench;
+import adgj_1.redstonebox.items.blocks.SignalBlock;
 import adgj_1.redstonebox.items.items.RedstoneBox;
 import adgj_1.redstonebox.networking.RBPacketHandler;
 import adgj_1.redstonebox.util.Reference;
@@ -43,7 +44,8 @@ public class Main
     
     // blocks
     public static Block workbench_box;
-
+    public static Block block_signal;
+    
 	public static WorldType emptyWorldType;
     
     @EventHandler
@@ -52,6 +54,7 @@ public class Main
         logger = event.getModLog();
         box_redstone = new RedstoneBox();
         workbench_box = new BoxWorkbench();
+        block_signal = new SignalBlock();
     }
 
     @EventHandler
@@ -71,7 +74,7 @@ public class Main
         // register keybindings
         keyBindings = new KeyBinding[1];
         
-        keyBindings[0] = new KeyBinding("key.utility.desc", Keyboard.KEY_K, "key.rb.category");
+        keyBindings[0] = new KeyBinding("key.teleport.desc", Keyboard.KEY_K, "key.rb.category");
         
         for (int i = 0; i < 1; i++) {
         	ClientRegistry.registerKeyBinding(keyBindings[0]);
