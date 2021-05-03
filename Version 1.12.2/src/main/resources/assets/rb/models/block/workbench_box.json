@@ -1,6 +1,12 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "rb:blocks/workbench_box"
+        "particle": "rb:blocks/workbench_box_side",
+        "down": "rb:blocks/workbench_box_bottom",
+        "up": "rb:blocks/workbench_box_top",
+        "north": "rb:blocks/workbench_box_side",
+        "east": "rb:blocks/workbench_box_side",
+        "south": "rb:blocks/workbench_box_side",
+        "west": "rb:blocks/workbench_box_side"
     }
 }

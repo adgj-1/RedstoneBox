@@ -26,6 +26,8 @@ public class SignalBlock extends BlockBase implements ITileEntityProvider {
 	public SignalBlock() {
 		super("block_signal", Material.ROCK);
 		setCreativeTab(CreativeTabs.REDSTONE);
+		this.setHardness(0.7f);
+		this.setResistance(2.0f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(isOn, false));
 	}
 	

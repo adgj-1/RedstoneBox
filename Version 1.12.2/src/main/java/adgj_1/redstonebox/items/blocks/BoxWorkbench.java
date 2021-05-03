@@ -23,6 +23,8 @@ public class BoxWorkbench extends BlockBase implements ITileEntityProvider {
 	public BoxWorkbench() {
 		super("workbench_box", Material.ROCK);
 		setCreativeTab(CreativeTabs.REDSTONE);
+		this.setHardness(1.5f);
+		this.setResistance(8.0f);
 	}
 
 	@Override

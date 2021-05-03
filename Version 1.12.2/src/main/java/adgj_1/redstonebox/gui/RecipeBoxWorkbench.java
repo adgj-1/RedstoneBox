@@ -27,6 +27,8 @@ public class RecipeBoxWorkbench {
 		}
 		if (!worldIn.isRemote) {
 			in1.getTagCompound().setInteger("boxid", DynamicDimensionHelper.getInstance().getRegBoxId());
+		} else {
+			in1.getTagCompound().setInteger("boxid", DynamicDimensionHelper.nextBoxId);
 		}
 		if (!in1.getTagCompound().hasKey("display", 10)) {
 			in1.getTagCompound().setTag("display", new NBTTagCompound());
