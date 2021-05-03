@@ -1,1 +1,5 @@
 item.rb.box_redstone.name=Redstone Box
+tile.rb.workbench_box.name=Box Workbench
+tile.rb.block_signal.name=Signal Block
+key.teleport.desc=Teleport
+key.rb.category=Redstone Box
