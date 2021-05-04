@@ -1,11 +1,9 @@
 package adgj_1.redstonebox.items.tileentity;
 
-import adgj_1.redstonebox.Main;
 import adgj_1.redstonebox.init.DimensionProperties;
 import adgj_1.redstonebox.init.DynamicDimensionHelper;
 import adgj_1.redstonebox.items.blocks.SignalBlock;
 import adgj_1.redstonebox.world.WorldProviderEmpty;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -30,10 +28,8 @@ public class TileEntitySignalBlock extends TileEntity implements ITickable{
 		if (!world.isRemote) {
 			if (world.provider instanceof WorldProviderEmpty) {
 				DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(world.provider.getDimension());
-				IBlockState block = world.getBlockState(pos);
 				if (properties.getActiveKey() == selectedKey) {
 					// Sends redstone signal
-					//Main.logger.info("Signal Triggered at " + pos.getX() + "," + pos.getY() + "," + pos.getZ());
 					if (!isOn) {
 						isOn = true;
 						SignalBlock.setState(isOn, getWorld(), pos);

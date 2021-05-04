@@ -3,7 +3,6 @@ package adgj_1.redstonebox.networking;
 
 import adgj_1.redstonebox.items.tileentity.TileEntitySignalBlock;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,7 +24,6 @@ public class PacketSignalBlock implements IMessage {
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
 		x = buf.getInt(0);
 		y = buf.getInt(4);
 		z = buf.getInt(8);
@@ -34,7 +32,6 @@ public class PacketSignalBlock implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);

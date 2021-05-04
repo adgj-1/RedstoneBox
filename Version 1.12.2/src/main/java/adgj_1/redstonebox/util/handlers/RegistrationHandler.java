@@ -1,11 +1,10 @@
 package adgj_1.redstonebox.util.handlers;
 
+import adgj_1.redstonebox.Main;
 import adgj_1.redstonebox.items.BlockBase;
 import adgj_1.redstonebox.items.tileentity.TileEntityBoxWorkbench;
 import adgj_1.redstonebox.items.tileentity.TileEntitySignalBlock;
 import adgj_1.redstonebox.util.Reference;
-
-import adgj_1.redstonebox.Main;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -24,7 +23,8 @@ public class RegistrationHandler {
 		
 		final Item[] blocks = {
 				((BlockBase)Main.workbench_box).getItemBlock(),
-				((BlockBase)Main.block_signal).getItemBlock()
+				((BlockBase)Main.block_signal).getItemBlock(),
+				((BlockBase)Main.block_exit).getItemBlock()
 		};
 		event.getRegistry().registerAll(items);
 		event.getRegistry().registerAll(blocks);
@@ -37,7 +37,8 @@ public class RegistrationHandler {
 	public static void registerBlocks(Register<Block> event) {
 		final Block[] blocks = {
 				Main.workbench_box,
-				Main.block_signal
+				Main.block_signal,
+				Main.block_exit
 		};
 		event.getRegistry().registerAll(blocks);
 	}

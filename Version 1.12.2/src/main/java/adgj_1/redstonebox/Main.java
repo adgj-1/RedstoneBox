@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 
 import adgj_1.redstonebox.init.DynamicDimensionHelper;
 import adgj_1.redstonebox.items.blocks.BoxWorkbench;
+import adgj_1.redstonebox.items.blocks.ExitBlock;
 import adgj_1.redstonebox.items.blocks.SignalBlock;
 import adgj_1.redstonebox.items.items.RedstoneBox;
 import adgj_1.redstonebox.networking.RBPacketHandler;
@@ -45,6 +46,7 @@ public class Main
     // blocks
     public static Block workbench_box;
     public static Block block_signal;
+    public static Block block_exit;
     
 	public static WorldType emptyWorldType;
     
@@ -55,6 +57,7 @@ public class Main
         box_redstone = new RedstoneBox();
         workbench_box = new BoxWorkbench();
         block_signal = new SignalBlock();
+        block_exit = new ExitBlock();
     }
 
     @EventHandler

@@ -1,9 +1,12 @@
 package adgj_1.redstonebox.init;
 
+import adgj_1.redstonebox.util.math.AngleConverter;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class DimensionProperties {
@@ -23,6 +26,15 @@ public class DimensionProperties {
 	// temporary variables does not save to disk
 	private int activeKey;
 	private int countBeforeKeyReset;
+	
+	private Vec3d heldPos;
+	private Vec3d heldRot;
+	private Vec3d heldRotDown;
+	private Vec3d heldRotLeft;
+	private int heldDim;
+	public boolean isKeyHeld;
+
+	
 	
 	public DimensionProperties(int id) {
 		this.id = id;
@@ -276,4 +288,36 @@ public class DimensionProperties {
 	public void setCountBeforeKeyReset(int countBeforeKeyReset) {
 		this.countBeforeKeyReset = countBeforeKeyReset;
 	}
+
+	public int getHeldDim() {
+		return heldDim;
+	}
+
+	public void setHeldDim(int heldDim) {
+		this.heldDim = heldDim;
+	}
+
+	public Vec3d getHeldPos() {
+		return heldPos;
+	}
+
+	public Vec3d getHeldRot() {
+		return heldRot;
+	}
+	
+	public void setHeldPos(EntityPlayer player) {
+		this.heldPos = player.getPositionEyes(1).add(player.getLookVec().scale(2));
+		this.heldRot = player.getLookVec();
+		this.heldRotDown = AngleConverter.getDownVectorForRotation(player.getPitchYaw().x, player.getPitchYaw().y);
+		this.heldRotLeft = AngleConverter.getLeftVectorForRotation(player.getPitchYaw().x, player.getPitchYaw().y);
+	}
+
+	public Vec3d getHeldRotLeft() {
+		return heldRotLeft;
+	}
+
+	public Vec3d getHeldRotDown() {
+		return heldRotDown;
+	}
+
 }

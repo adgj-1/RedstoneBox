@@ -1,8 +1,8 @@
 package adgj_1.redstonebox.networking;
 
 import adgj_1.redstonebox.init.TeleportHelper;
-
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
@@ -44,7 +44,6 @@ public class PacketTeleporter implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);
@@ -56,11 +55,13 @@ public class PacketTeleporter implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketTeleporter message, MessageContext ctx) {
-			// TODO Auto-generated method stub
-			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player.getEntityWorld().getEntityByID(
+			Entity entity = ctx.getServerHandler().player.getEntityWorld().getEntityByID(
 					message.id);
-			FMLCommonHandler.instance().getWorldThread(ctx.netHandler)
+			if (entity instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) entity;
+				FMLCommonHandler.instance().getWorldThread(ctx.netHandler)
 			.addScheduledTask(() -> teleportToDimension(player,message.dimid,message.x,message.y,message.z));
+			}
 			return message;
 		}
 		
@@ -78,4 +79,6 @@ public class PacketTeleporter implements IMessage {
 		worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(entityPlayerMP, dimension, new TeleportHelper(worldServer,x,y,z));
 		player.setPositionAndUpdate(x,y,z);
 	}
+	
+	
 }

@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class RBEventHandler {
@@ -91,6 +92,21 @@ public class RBEventHandler {
 					properties.setActiveKey(-1);
 					properties.setCountBeforeKeyReset(DimensionProperties.KEY_ACTIVE_DURATION);
 				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+		if (!e.player.world.isRemote) {
+			ItemStack heldItem = e.player.getHeldItemMainhand();
+			
+			if (heldItem.hasTagCompound() && heldItem.getTagCompound().hasKey("boxid")) {
+				int boxid = heldItem.getTagCompound().getInteger("boxid");
+				DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(boxid);
+				properties.setHeldPos(e.player);
+				properties.setHeldDim(e.player.getEntityWorld().provider.getDimension());
+				properties.isKeyHeld = true;
 			}
 		}
 	}

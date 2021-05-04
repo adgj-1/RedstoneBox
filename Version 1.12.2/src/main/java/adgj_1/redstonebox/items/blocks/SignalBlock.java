@@ -96,7 +96,6 @@ public class SignalBlock extends BlockBase implements ITileEntityProvider {
 			tileentity.validate();
 			worldIn.setTileEntity(pos, tileentity);
 		}
-		IBlockState state = worldIn.getBlockState(pos);
 	}
 	
 }

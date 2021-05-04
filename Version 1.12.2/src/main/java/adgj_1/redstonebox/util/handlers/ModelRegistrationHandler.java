@@ -20,10 +20,10 @@ public class ModelRegistrationHandler {
 		registerModel(Main.box_redstone, 0);
 		registerModel(((BlockBase)Main.workbench_box).getItemBlock(), 0);
 		registerModel(((BlockBase)Main.block_signal).getItemBlock(), 0);
+		registerModel(((BlockBase)Main.block_exit).getItemBlock(), 0);
 	}
 	
 	private static void registerModel(Item item, int meta) {
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(),"inventory"));
-		System.out.println("Resource Path: "+new ModelResourceLocation(item.getRegistryName(),"inventory").getResourcePath());
 	}
 }
