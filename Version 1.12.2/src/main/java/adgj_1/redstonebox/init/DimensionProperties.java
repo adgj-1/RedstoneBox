@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class DimensionProperties {
@@ -22,6 +23,7 @@ public class DimensionProperties {
 	private BlockPos exitPos;
 	private int exitDim;
 	private int size;
+	private int dimensionType;
 	
 	// temporary variables does not save to disk
 	private int activeKey;
@@ -51,6 +53,7 @@ public class DimensionProperties {
 		exitPos = new BlockPos(0,0,0);
 		exitDim = 0;
 		size = 16;
+		dimensionType = 1;
 	}
 	
 	public int getId() {
@@ -126,6 +129,7 @@ public class DimensionProperties {
 		nbt.setInteger("exitX", exitPos.getX());
 		nbt.setInteger("exitY", exitPos.getY());
 		nbt.setInteger("exitZ", exitPos.getZ());
+		nbt.setInteger("dimtype", dimensionType);
 	}
 
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -191,6 +195,8 @@ public class DimensionProperties {
 		} else {
 			size = 16;
 		}
+		
+		dimensionType = nbt.getInteger("dimtype");
 	}
 
 	public int getAtmosphereDensity() {
@@ -320,4 +326,34 @@ public class DimensionProperties {
 		return heldRotDown;
 	}
 
+	/**
+	 * 0 = DimensionTypeEmpty
+	 * 1 = DimensionTypePocket
+	 * @param type
+	 */
+	public void setDimType(int type) {
+		dimensionType = type;
+	}
+	
+	public void setDimType(DimensionType type) {
+		if (type == DynamicDimensionHelper.PocketDimensionType) {
+			dimensionType = 1;
+			return;
+		}
+		
+		dimensionType = 0;
+	}
+	
+	public DimensionType getDimType() {
+		switch (dimensionType) {
+		case 1: {
+			return DynamicDimensionHelper.PocketDimensionType;
+		}
+		
+		default: {
+			return DynamicDimensionHelper.EmptyDimensionType;
+		}
+		}
+	}
+	
 }

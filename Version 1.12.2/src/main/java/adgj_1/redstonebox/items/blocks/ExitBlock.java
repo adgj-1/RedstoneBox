@@ -194,6 +194,7 @@ public class ExitBlock extends BlockBase {
 		Matrix3f mat = new Matrix3f();
 		mat.setIdentity();
 		EnumFacing face = (EnumFacing)state.getValue(FACING);
+		mat.m11 = -1;
 		
 		if (face == EnumFacing.EAST) {
 			mat.m00 = -1;

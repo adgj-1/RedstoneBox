@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": {"model": "rb:block_exit"},
+        "facing=east": {"model": "rb:block_exit", "y": 90},
+        "facing=south": {"model": "rb:block_exit", "y": 180},
+        "facing=west": {"model": "rb:block_exit", "y": 270}
+    }
+}

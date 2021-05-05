@@ -1,5 +1,6 @@
 item.rb.box_redstone.name=Redstone Box
 tile.rb.workbench_box.name=Box Workbench
 tile.rb.block_signal.name=Signal Block
+tile.rb.block_exit.name=Exit Portal
 key.teleport.desc=Teleport
 key.rb.category=Redstone Box

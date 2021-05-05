@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "rb:blocks/block_exit_top",
+        "front": "rb:blocks/block_exit_front",
+        "side": "rb:blocks/block_exit_side"
+    }
+}

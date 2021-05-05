@@ -56,7 +56,7 @@ public class RBEventHandler {
 					if (properties != null) {
 						NBTTagCompound nbt = new NBTTagCompound();
 						properties.writeToNBT(nbt);
-						Main.logger.info("Target Dimension" + boxid + " Properties: " + nbt); // Print out properties
+						Main.logger.info("Target Dimension " + boxid + " Properties: " + nbt); // Print out properties
 						RBPacketHandler.INSTANCE.sendToServer(new PacketDimensionProperties(boxid, 1, player.world.provider.getDimension()));
 						RBPacketHandler.INSTANCE.sendToServer(new PacketDimensionProperties(boxid, 2, (int) player.posX));
 						RBPacketHandler.INSTANCE.sendToServer(new PacketDimensionProperties(boxid, 3, (int) player.posY));
@@ -84,8 +84,15 @@ public class RBEventHandler {
 	
 	@SubscribeEvent
 	public void onWorldTick(WorldTickEvent e) {
+		if (e.world == null) {
+			return;
+		}
+		
 		if (!e.world.isRemote && e.world.provider instanceof WorldProviderEmpty) {
 			DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(e.world.provider.getDimension());
+			if (properties == null) {
+				return;
+			}
 			if (properties.getActiveKey() != -1) {
 				properties.setCountBeforeKeyReset(properties.getCountBeforeKeyReset() - 1);
 				if (properties.getCountBeforeKeyReset() <= 0) {
@@ -98,15 +105,20 @@ public class RBEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+		if (e.player == null || e.player.world == null) {
+			return;
+		}
 		if (!e.player.world.isRemote) {
 			ItemStack heldItem = e.player.getHeldItemMainhand();
 			
 			if (heldItem.hasTagCompound() && heldItem.getTagCompound().hasKey("boxid")) {
 				int boxid = heldItem.getTagCompound().getInteger("boxid");
 				DimensionProperties properties = DynamicDimensionHelper.getInstance().getDimensionProperties(boxid);
-				properties.setHeldPos(e.player);
-				properties.setHeldDim(e.player.getEntityWorld().provider.getDimension());
-				properties.isKeyHeld = true;
+				if (properties != null) {
+					properties.setHeldPos(e.player);
+					properties.setHeldDim(e.player.getEntityWorld().provider.getDimension());
+					properties.isKeyHeld = true;
+				}
 			}
 		}
 	}

@@ -144,15 +144,16 @@ public class DynamicDimensionHelper {
 
 		for(Object key : dimListNbt.getKeySet()) {
 			String keyString = (String)key;
-			DimensionProperties propeties = DimensionProperties.createFromNBT(Integer.parseInt(keyString) ,dimListNbt.getCompoundTag(keyString));
+			DimensionProperties properties = DimensionProperties.createFromNBT(Integer.parseInt(keyString) ,dimListNbt.getCompoundTag(keyString));
 
-			if(propeties != null) {
+			if(properties != null) {
 				int keyInt = Integer.parseInt(keyString);
 				if(!net.minecraftforge.common.DimensionManager.isDimensionRegistered(keyInt)) {
-					net.minecraftforge.common.DimensionManager.registerDimension(keyInt, PocketDimensionType);
+					net.minecraftforge.common.DimensionManager.registerDimension(keyInt, properties.getDimType());
+					Main.logger.info("Registered dimension #" + keyInt + " as type " + properties.getDimType());
 				}
 
-				loadedDimProps.put(new Integer(keyInt), propeties);
+				loadedDimProps.put(new Integer(keyInt), properties);
 			}
 			else{
 				Main.logger.warn("Null Dimension Properties Recieved");
@@ -190,18 +191,33 @@ public class DynamicDimensionHelper {
 	public int getRegBoxId() {
 		int res = nextBoxId;
 		nextBoxId = getNextFreeDim(nextBoxId);
-		registerNewDimension(nextBoxId);
+		registerNewDimension(nextBoxId, EmptyDimensionType);
 		return res;
 	}
 
 	/**
+	 * register and return the next available dimension id with the given type
+	 * @return registered dimension id
+	 */
+	public int getRegBoxId(DimensionType type) {
+		int res = nextBoxId;
+		nextBoxId = getNextFreeDim(nextBoxId);
+		registerNewDimension(nextBoxId, type);
+		return res;
+	}
+	
+	/**
 	 * registers the dimension with forge and DynamicDimensionHelper given the id
 	 * @param dimId the dimension id to register
 	 */
-	public void registerNewDimension(int dimId) {
+	public void registerNewDimension(int dimId, DimensionType type) {
 		DimensionProperties properties = new DimensionProperties(dimId);
+		properties.setDimType(type);
 		dimensionList.put(dimId, properties);
-		net.minecraftforge.common.DimensionManager.registerDimension(nextBoxId, EmptyDimensionType);
+		net.minecraftforge.common.DimensionManager.registerDimension(nextBoxId, type);
+		Main.logger.info("Registered dimension #" + nextBoxId + " as type " + type);
+//		Main.logger.info("Registered dimension properties #" + nextBoxId + " as type " + properties.getDimType());
+//		Main.logger.info(DynamicDimensionHelper.getInstance().getDimensionProperties(nextBoxId).getDimType());
 	}
 	
 	/**
