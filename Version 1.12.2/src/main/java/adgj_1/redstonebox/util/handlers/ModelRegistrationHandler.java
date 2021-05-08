@@ -18,9 +18,12 @@ public class ModelRegistrationHandler {
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
 		registerModel(Main.box_redstone, 0);
+		registerModel(Main.sapphire, 0);
 		registerModel(((BlockBase)Main.workbench_box).getItemBlock(), 0);
 		registerModel(((BlockBase)Main.block_signal).getItemBlock(), 0);
 		registerModel(((BlockBase)Main.block_exit).getItemBlock(), 0);
+		registerModel(((BlockBase)Main.ore_sapphire).getItemBlock(), 0);
+		registerModel(((BlockBase)Main.block_sapphire).getItemBlock(), 0);
 	}
 	
 	private static void registerModel(Item item, int meta) {

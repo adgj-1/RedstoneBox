@@ -1,0 +1,35 @@
+{
+    "type": "forge:ore_shaped",
+    
+    "pattern":
+    [
+        "ABA",
+        "BCB",
+        "ABA"
+    ],
+    
+    "key":
+    {
+        "A":
+        {
+            "item": "minecraft:ender_pearl"
+        },
+        
+        "B":
+        {
+            "item": "minecraft:redstone_block"
+        },
+        
+        "C":
+        {
+            "type": "forge:ore_dict",
+            "ore": "gemSapphire"
+        }
+    },
+    
+    "result":
+    {
+        "item": "rb:box_redstone",
+        "count": 1
+    }
+}

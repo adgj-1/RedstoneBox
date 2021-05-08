@@ -1,0 +1,25 @@
+{
+    "type": "forge:ore_shaped",
+    
+    "pattern":
+    [
+        "AAA",
+        "AAA",
+        "AAA"
+    ],
+    
+    "key":
+    {
+        "A":
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemSapphire"
+        }
+    },
+    
+    "result":
+    {
+        "item": "rb:block_sapphire",
+        "count": 1
+    }
+}
